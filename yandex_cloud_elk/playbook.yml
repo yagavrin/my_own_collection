@@ -2,4 +2,4 @@
 - name: Call my_own_module from role
   hosts: localhost
   roles:
-    - module_role
+    - my_own_namespace.yandex_cloud_elk.module_role
