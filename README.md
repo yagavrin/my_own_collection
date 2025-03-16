@@ -19,3 +19,7 @@ tar.gz архив https://disk.yandex.ru/d/HssplYY6qSJEnQ
 ### Шаг 16. Запустите playbook, убедитесь, что он работает.
 
 ![ans-06-16](https://github.com/user-attachments/assets/7b74c211-0832-4ae1-9330-d3640fed52b1)
+
+Файл создан с указанным содержимым:
+
+![ans-06-16_2](https://github.com/user-attachments/assets/1971a85a-431e-46bc-8eee-e5b1b76d860e)
