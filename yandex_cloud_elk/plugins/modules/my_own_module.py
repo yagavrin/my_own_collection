@@ -3,6 +3,7 @@
 # Copyright: (c) 2018, Terry Jones <terry.jones@example.org>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import (absolute_import, division, print_function)
+import os
 __metaclass__ = type
 
 DOCUMENTATION = r'''
@@ -112,13 +113,23 @@ def run_module():
     # conditional state that effectively causes a failure, run
     # AnsibleModule.fail_json() to pass in the message and the result
     try:
-        with open(module.params['path'], 'w') as file:
-            file.write(module.params['content'])
+
+        if os.path.exists(module.params['path']):
+            with open(module.params['path'], 'r+') as file:
+                existing_content = file.read()
+            
+            # If the content is the same, stop execution
+            if existing_content == module.params['content']:
+                result['changed'] = False
+            else:
+                file.seek(0)  # Move the file pointer to the beginning
+                file.write(module.params['content'])  # Write new content
+                file.truncate()  # Truncate any remaining old content
+                result['changed'] = True
     except Exception as e:
         result['status'] = 'Error'
         module.fail_json(msg=f"Module failed with error: {e}", **result)
 
-    result['changed'] = True
     result['status'] = 'Success'
     module.exit_json(**result)
 
